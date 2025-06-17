@@ -1,0 +1,53 @@
+API Routes Available for Frontend Use
+Here's a comprehensive list of all API routes available in your project, organized by category:
+
+//Authentication Routes
+
+Method	Endpoint	Description	Request Body	Response
+
+POST	/api/auth/register	Register a new user	{ email, password, firstName, lastName }	User data with token
+POST	/api/auth/login	Login user	{ email, password }	User data with token
+POST	/api/auth/verify	Verify and refresh token	{ token }	New token with user data
+POST	/api/auth/logout	Logout user (client-side operation)	None	Success message
+
+//User Routes
+
+Method	Endpoint	Description	Request Body	Response
+
+GET	/api/users/me	Get current user profile	None	User profile data
+PATCH	/api/users/me	Update current user profile	User data (except password)	Updated user data
+PATCH	/api/users/change-password	Change user password	{ currentPassword, newPassword }	Success message
+DELETE	/api/users/me	Delete/deactivate user account	None	Success response (204)
+GET	/api/users	Get all users	None	List of all users
+
+//Resume Routes
+
+Method	Endpoint	Description	Request Body	Response
+
+POST	/api/resumes/parse	Parse and analyze resume	Form data with resume file	Resume analysis data
+GET	/api/resumes	Get all resumes for logged-in user	None	Array of resumes
+GET	/api/resumes/:id	Get single resume by ID	None	Resume data
+GET	/api/resumes/:id/file	Get resume file content	None	Raw file data
+PATCH	/api/resumes/:id	Update resume title	{ title }	Updated resume data
+DELETE	/api/resumes/:id	Delete resume	None	Success message
+GET	/api/resumes/:id/analysis	Get resume analysis	None	Analysis data
+POST	/api/resumes/:id/job-match	Get job match analysis	{ jobDescription }	Match score and suggestions
+GET	/api/resumes/stats/user	Get user's resume statistics	None	Statistics data
+
+//Job Routes
+
+Method	Endpoint	Description	Request Body	Response
+
+POST	/api/jobs/search	Search for jobs	{ keywords: string[] }	Array of job listings
+GET	/api/jobs/saved	Get saved jobs	None	Array of saved jobs
+POST	/api/jobs/save	Save a job	Job details	Saved job data
+DELETE	/api/jobs/saved/:id	Delete a saved job	None	Success message
+GET	/api/jobs/recommended/:resumeId	Get recommended jobs based on resume	None	Array of recommended jobs
+
+//System Routes
+
+Method	Endpoint	Description	Request Body	Response
+
+GET	/api/health	Health check	None	Server status
+
+All routes except for /api/auth/register, /api/auth/login, /api/health, and /api/resumes/parse require authentication with a valid JWT token sent as a Bearer token in the Authorization header.
